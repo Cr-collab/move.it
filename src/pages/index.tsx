@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import { ExperienceBar } from '../components/ExperienceBar'
 import styles from '../../styles/Home.module.css'
 import { Profile } from '../components/Profile'
+import { CompletedChanllages } from '../components/CompletedChanllages'
 
 const Home: NextPage = () => {
   return (
@@ -11,6 +12,7 @@ const Home: NextPage = () => {
       <section>
         <div>
           <Profile />
+          <CompletedChanllages />
         </div>
         <div></div>
       </section>
