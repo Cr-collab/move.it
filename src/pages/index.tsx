@@ -7,6 +7,7 @@ import { CompletedChanllages } from '../components/CompletedChanllages'
 import { Countdown } from '../components/Countdown'
 
 import Head from 'next/head'
+import { ChallengeBox } from '../components/ChallengeBox'
 
 const Home: NextPage = () => {
   return (
@@ -21,7 +22,9 @@ const Home: NextPage = () => {
           <CompletedChanllages />
           <Countdown />
         </div>
-        <div></div>
+        <div>
+          <ChallengeBox />
+        </div>
       </section>
     </div>
   )
