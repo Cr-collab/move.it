@@ -8,6 +8,7 @@ import { Countdown } from '../components/Countdown'
 
 import Head from 'next/head'
 import { ChallengeBox } from '../components/ChallengeBox'
+import { CountdownProvider } from '../contexts/CountdownContext'
 
 const Home: NextPage = () => {
   return (
@@ -17,14 +18,16 @@ const Home: NextPage = () => {
       </Head>
       <ExperienceBar />
       <section>
-        <div>
-          <Profile />
-          <CompletedChanllages />
-          <Countdown />
-        </div>
-        <div>
-          <ChallengeBox />
-        </div>
+        <CountdownProvider>
+          <div>
+            <Profile />
+            <CompletedChanllages />
+            <Countdown />
+          </div>
+          <div>
+            <ChallengeBox />
+          </div>
+        </CountdownProvider>
       </section>
     </div>
   )
