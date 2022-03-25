@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 import challenges from '../../challenges.json'
 
 type Challenge = {
@@ -22,15 +23,33 @@ export const ChallengesContext = createContext({} as ChallengeContextData)
 
 interface ChallengeProviderProps {
   children: ReactNode
+  levelC: number
+  currentExperienceC: number
+  challengesCompletedC: number
 }
 
-export function ChallengesProvider({ children }: ChallengeProviderProps) {
+export function ChallengesProvider({
+  children,
+  levelC,
+  currentExperienceC,
+  challengesCompletedC
+}: ChallengeProviderProps) {
   const [level, setLevel] = useState(1)
   const [currentExperience, setCurrentExperience] = useState(0)
   const [challengesCompleted, setChallengesCompleted] = useState(0)
   const [activeChallenge, setActiveChallenge] = useState(null)
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
+
+  useEffect(() => {
+    Notification.requestPermission()
+  }, [])
+
+  useEffect(() => {
+    Cookies.set('level', String(level))
+    Cookies.set('currentExperience', String(currentExperience))
+    Cookies.set('challengesCompleted', String(challengesCompleted))
+  }, [level, currentExperience, challengesCompleted])
 
   function levelUp() {
     setLevel(level + 1)
@@ -40,6 +59,14 @@ export function ChallengesProvider({ children }: ChallengeProviderProps) {
     const randomChallengeIndex = Math.floor(Math.random() * challenges.length)
     const challenge = challenges[randomChallengeIndex]
     setActiveChallenge(challenge)
+
+    new Audio('/notification.mp3').play()
+
+    if (Notification.permission === 'granted') {
+      new Notification('Novo Desafio 🎉', {
+        body: `Valendo ${challenge.amount}xp`
+      })
+    }
   }
 
   function resetChallenge() {
